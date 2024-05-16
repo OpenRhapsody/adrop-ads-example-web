@@ -20,6 +20,15 @@ function App() {
        await adrop.setProperty(key, value)
     }, [])
     
+    const sendEvent = useCallback(async () => {
+        await adrop.logEvent("event_name", {
+            "data_key_1": 1,
+            "data_key_2": 1.1,
+            "data_key_3": true,
+            "data_key_4": "value_text"
+        })
+    }, [])
+    
     return (
         <div>
             <h1>Adrop Example</h1>
@@ -34,6 +43,10 @@ function App() {
             
             <button onClick={() => property('AGE', '25')}>
                 Age 25
+            </button>
+            
+            <button onClick={sendEvent}>
+                Event
             </button>
             
             <div dangerouslySetInnerHTML={{ __html: ad }}/>

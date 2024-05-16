@@ -6,6 +6,7 @@ declare let adrop: {
     unitId: string,
   ) => Promise<{ ad: string, unit: string }>;
   setProperty: (key: string, value: string) => Promise<void>;
+  logEvent: (name: string, params?: Record<string, any>) => Promise<void>;
 };
 
 @Component({

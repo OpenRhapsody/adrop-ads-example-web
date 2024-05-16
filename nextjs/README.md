@@ -49,7 +49,7 @@ Copy and paste these scripts into the bottom of your ```<head>``` tag
 ```html
 <head>
     ...
-    <script type='text/javascript' src='https://storage.adrop.io/js/adrop-0.1.1.min.js'></script>
+    <script type='text/javascript' src='https://storage.adrop.io/js/adrop-0.1.2.min.js'></script>
     <script>adrop = window.adrop || {}</script>
 </head>
 ```
@@ -77,6 +77,7 @@ declare var adrop: {
     initialize: (appKey: string) => void;
     request: (unitId: string) => Promise<{ ad: string, unit: string}>;
     setProperty: (key: string, value: string) => Promise<void>;
+    logEvent: (name: string, params?: Record<string, any>) => Promise<void>;
 }
 ```
 
