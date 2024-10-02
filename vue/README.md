@@ -95,6 +95,7 @@ declare var adrop: {
     request: (unitId: string) => Promise<{ ad: string, unit: string}>;
     setProperty: (key: string, value: string) => Promise<void>;
     logEvent: (name: string, params?: Record<string, any>) => Promise<void>;
+   onClick: (unitId: string, link: string) => void;
 }
 ```
 
@@ -106,5 +107,14 @@ Add this code in your .eslintrc.json if you use eslint
    "globals": {
       "adrop": true
    }
+}
+```
+
+### (Optional)
+If you add `onClick` function, destination URL will not be opened, and you must handle it.
+
+```javascript
+adrop.onClick = (unitId, link) => {
+    console.log(unitId, link);
 }
 ```
