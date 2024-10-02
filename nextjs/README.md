@@ -49,7 +49,7 @@ Copy and paste these scripts into the bottom of your ```<head>``` tag
 ```html
 <head>
     ...
-    <script type='text/javascript' src='https://storage.adrop.io/js/adrop-0.1.2.min.js'></script>
+    <script type='text/javascript' src='https://storage.adrop.io/js/adrop-0.2.0.min.js'></script>
     <script>adrop = window.adrop || {}</script>
 </head>
 ```
