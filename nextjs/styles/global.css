@@ -30,3 +30,28 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  margin: 8px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.text {
+  font-size: 16px;
+  color: black;
+}

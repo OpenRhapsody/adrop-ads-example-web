@@ -1,6 +1,21 @@
 <h1>Adrop Example</h1>
-<div class="container">
-  <div [innerHTML]="ad"></div>
+<button (click)="sendProperty()">Property</button>
+<button (click)="sendEvent()">Event</button>
+<h2>Banner</h2>
+<div [innerHTML]="banner?.ad"></div>
+
+<h2>Native Ad</h2>
+<div>
+  <div class='row'>
+    <img class='icon' src='{{ nativeAd?.profile?.displayLogo }}' alt='Adrop profile logo' />
+    <div class='text'>{{ nativeAd?.profile?.displayName }}</div>
+  </div>
+
+  <div class='row'>
+    <div class='text'>{{ nativeAd?.headline }}</div>
+    <div class='text'>{{ nativeAd?.body }}</div>
+  </div>
+  <div [innerHTML]="nativeAd?.ad" class='creative'></div>
 </div>
 
 <!--

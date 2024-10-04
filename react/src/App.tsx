@@ -1,24 +1,32 @@
 import './App.css'
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { Banner, NativeAd } from './types'
 
 const appKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjAxSEQ1UTNaOEdYTk5XRjQ2NENOV0NNQlM0OjAxSEZCTU1HRkZXUU5OMk5aVkpCNU5GUFZaIiwia2V5VHlwZSI6MSwiaWF0IjoxNzAwMTI0MDQ5LCJleHAiOjI1MzQwMjEyODAwMH0.J877rLr4xvUWqcEzsesEp_KNzO8XnHaJeESPXdABubQ"
 
 function App() {
-    const [ad, setAd] = useState('')
+    const [ad, setAd] = useState<Banner>()
+    const [nativeAd, setNativeAd] = useState<NativeAd>()
     
     useEffect(() => {
         adrop.initialize(appKey)
     }, [])
     
-    const request = useCallback(async () => {
-        const res = await adrop.request('PUBLIC_TEST_UNIT_ID_375_80')
-        setAd(res?.ad ?? '')
+    const banner = useMemo(() => ad?.ad ?? '', [ad])
+    const native = useMemo(() => nativeAd?.ad ?? '', [nativeAd])
+    
+    const request = useCallback(async (unitId: string) => {
+        return await adrop.request(unitId)
     }, [])
     
-    const property = useCallback(async (key: string, value: string) => {
-       await adrop.setProperty(key, value)
-    }, [])
+    const requestBanner = useCallback(async () => {
+        setAd(await request('PUBLIC_TEST_UNIT_ID_375_80'))
+    }, [request])
+    
+    const requestNativeAd = useCallback(async () => {
+        setNativeAd(await request('PUBLIC_TEST_UNIT_ID_NATIVE'))
+    }, [request])
     
     const sendEvent = useCallback(async () => {
         await adrop.logEvent("event_name", {
@@ -29,27 +37,63 @@ function App() {
         })
     }, [])
     
+    const sendProperty = useCallback(async () => {
+        await adrop.setProperty("property_key", "property_value")
+    }, [])
+    
+    const renderNativeAd = useMemo(() => {
+        if (!nativeAd) return null
+        
+        const profileLogo = nativeAd?.profile?.displayLogo
+        const profileName = nativeAd?.profile?.displayName
+        const headline = nativeAd?.headline
+        const body = nativeAd?.body
+        const creative = nativeAd?.ad
+        const extra = nativeAd?.extra
+        
+        return (
+            <div className='container column'>
+                <div className='container row'>
+                    {profileLogo && <img className='icon' src={profileLogo} alt='logo'/>}
+                    {profileName && <span className='text'>{profileName}</span>}
+                </div>
+                {creative && <div dangerouslySetInnerHTML={{ __html: native }}/>}
+                {headline && <div className='container text'>{headline}</div>}
+                {body && <div className='container text'>{body}</div>}
+                {extra && extra.map(({ id, text }) => (
+                    <div key={id} className='container text'>{text}</div>
+                ))}
+            </div>
+        )
+    }, [nativeAd])
+    
     return (
         <div>
             <h1>Adrop Example</h1>
             
-            <button onClick={request}>
-                Request Ad (375_80)
-            </button>
+            <div className='buttons'>
+                <button onClick={requestBanner}>
+                    Request Banner (375_80)
+                </button>
+                
+                <button onClick={requestNativeAd}>
+                    Request Native Ad
+                </button>
+                
+                <button onClick={sendProperty}>
+                    Property
+                </button>
+                
+                <button onClick={sendEvent}>
+                    Event
+                </button>
+            </div>
             
-            <button onClick={() => property('GDR', 'M')}>
-                Gender M
-            </button>
+            <h2>Banner</h2>
+            <div dangerouslySetInnerHTML={{ __html: banner }}/>
             
-            <button onClick={() => property('AGE', '25')}>
-                Age 25
-            </button>
-            
-            <button onClick={sendEvent}>
-                Event
-            </button>
-            
-            <div dangerouslySetInnerHTML={{ __html: ad }}/>
+            <h2>Native Ad</h2>
+            {renderNativeAd}
         </div>
     )
 }

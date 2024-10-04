@@ -33,3 +33,32 @@ a,
     padding: 0 2rem;
   }
 }
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+
+  > button {
+    margin-right: 4px;
+  }
+}
+
+.container {
+  margin: 8px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.text {
+  font-size: 16px;
+  color: white;
+}
