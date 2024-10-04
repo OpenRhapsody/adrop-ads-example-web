@@ -86,11 +86,21 @@ export class AppComponent implements OnInit {
 Copy this code in your *.d.ts
 ```typescript
 declare var adrop: {
-    initialize: (appKey: string) => void;
-    request: (unitId: string) => Promise<{ ad: string, unit: string}>;
-    setProperty: (key: string, value: string) => Promise<void>;
-    logEvent: (name: string, params?: Record<string, any>) => Promise<void>;
-    onClick: (unitId: string, link: string) => void;
+   initialize: (appKey: string) => void;
+   request: (unitId: string) => Promise<{
+      ad: string,
+      unit: string,
+      headline?: string,
+      body?: string,
+      profile?: {
+         displayName: string,
+         displayLogo: string
+      },
+      extra?: { id: string, text: string }[]
+   }>;
+   setProperty: (key: string, value: any) => Promise<void>;
+   logEvent: (name: string, params?: Record<string, any>) => Promise<void>;
+   onClick: (unitId: string, link: string) => void;
 }
 ```
 
