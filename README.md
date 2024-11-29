@@ -104,7 +104,8 @@ declare var adrop: {
             displayName: string,
             displayLogo: string
         },
-        extra?: { id: string, text: string }[]
+        extra?: { id: string, text: string }[],
+        asset?: string
     }>;
     setProperty: (key: string, value: any) => Promise<void>;
     logEvent: (name: string, params?: Record<string, any>) => Promise<void>;
